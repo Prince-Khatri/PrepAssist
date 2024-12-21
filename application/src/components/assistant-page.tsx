@@ -1,12 +1,61 @@
-import Link from "next/link";
-import { FaCirclePlus } from "react-icons/fa6";
+"use client";
+
 import "./components.css"
+import Link from "next/link";
+import { AiFillRightCircle } from "react-icons/ai";
+import axios from "axios";
+import { useState } from "react";
 
-function AssistantPage(){
-    return(
+type IMessage = { role: string; content: any; };
+
+function AssistantPage() {
+    const [input, setInput] = useState('');
+    const [chat, setChat] = useState<IMessage[]>([
+        { role: 'assistant', content: "How can I help you?" },
+    ]);
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async () => {
+        if (!input.trim()) return;
+
+        const userMessage = { role: 'user', content: input };
+        setChat((prevChat) => [...prevChat, userMessage]);
+        setInput('');
+        setLoading(true);
+
+        try {
+            const response = await axios.post('/api/ai', {
+                prompt: input,
+            });
+
+            if (response.data?.response) {
+                const assistantMessage = {
+                    role: 'assistant',
+                    content: response.data.response,
+                };
+                setChat((prevChat) => [...prevChat, assistantMessage]);
+            } else {
+                setChat((prevChat) => [
+                    ...prevChat,
+                    { role: 'assistant', content: 'Oops! Something went wrong.' },
+                ]);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setChat((prevChat) => [
+                ...prevChat,
+                { role: 'assistant', content: 'An error occurred while fetching the response.' },
+            ]);
+        } finally {
+            setInput("");
+            setLoading(false);
+        }
+    };
+
+
+    return (
         <>
-            <div id="container2">
-
+            <div id="container3">
                 <nav className="navbar">
                     <div className="navbar-links">
                         <Link href='/login' className="logIn">Login</Link>
@@ -14,31 +63,36 @@ function AssistantPage(){
                     </div>
                 </nav>
 
-                <section className="page2-s1">
-                    <FaCirclePlus/>
-                    <p>Drag & drop file here</p>
-                </section>
+                <div id="page3-box">
+                    <section id="page3-s1">
 
-
-                <section className="page2-s2 button-class">
-                    Upload
-                </section>
-
-
-                <section className="page2-s3">
-                    <div>Box 1</div>
-                    <div>Box 2</div>
-                    <div>Box 3</div>
-                    <div>Box 4</div>
-                    <div>Box 5</div>  
-                    <div>Box 6</div>  
-                </section>
-
-                
-                <section className="page2-s4 button-class">
-                    <Link href='/ansPage' style={{color:"#FFD56C", textDecoration:"none", width:"100%",height:"100%", display:"flex", alignItems:"center", justifyContent:"center"}}>Proceed</Link>
-                </section>
-                
+                    </section>
+                    <section id="page3-s2">
+                        <div className="s2-box">
+                            {chat.map((message, index) => (
+                                <div
+                                    key={index}
+                                    className={`p-2 rounded-md ${message.role === 'user'
+                                        ? 'bg-blue-100 text-blue-900 self-end ml-auto'
+                                        : 'bg-green-100 text-green-900 self-start mr-auto'
+                                        } max-w-[80%]`}
+                                >
+                                    <strong>{message.role === 'user' ? 'You: ' : 'Assistant: '}</strong>
+                                    {message.content}
+                                </div>
+                            ))}
+                            {loading && (
+                                <div className="text-sm text-gray-500 italic">Assistant is typing...</div>
+                            )}
+                        </div>
+                        <div className="div">
+                            <input value={input || ""} onChange={(e) => setInput(e.target.value)} spellCheck="false" placeholder="Ask prepAssist" />
+                            <button onClick={handleSubmit}>
+                                <AiFillRightCircle style={{ fontSize: "2.5rem", color: "#1ba057" }} />
+                            </button>
+                        </div>
+                    </section>
+                </div>
             </div>
         </>
     )

@@ -1,4 +1,4 @@
-// import illustration1 from '../images/ill1.png';
+import Image from "next/image";
 import "./components.css"
 import Link from "next/link";
 
@@ -7,7 +7,7 @@ function LoginPage(){
         <>
             <div id="container4">
                 <div className="container4-box1">
-                    {/* <img src={illustration1}/> */}
+                    <Image src={'/ill1.png'} alt="random"/>
                 </div>
 
                 <div className="container4-box2">

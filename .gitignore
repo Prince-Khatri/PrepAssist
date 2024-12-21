@@ -1,1 +1,8 @@
 **/node_modules
+**/djangoEnv
+**/venv
+**/.venv
+
+djangoEnv
+pdf-analyzer/djangoEnv
+**/__pycache__

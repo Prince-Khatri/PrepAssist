@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev",
+    "preview": "npm run pages:build && wrangler pages dev --live-reload",
     "preview:worker": "wrangler pages dev",
     "deploy": "npm run pages:build && wrangler pages deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts"
@@ -17,6 +17,7 @@
     "@uploadthing/react": "^7.1.3",
     "mem0ai": "^1.0.29",
     "next": "15.1.0",
+    "next-auth": "^5.0.0-beta.25",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",

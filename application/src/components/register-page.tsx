@@ -1,11 +1,11 @@
-// import illustration2 from '../images/ill2.png';
+import Image from 'next/image';
 
 function RegisterPage(){
     return(
         <>
         <div id="container4">
                 <div className="container4-box1">
-                    {/* <img src={illustration2}/> */}
+                    <Image src={'/ill2.png'} alt='random' />
                 </div>
 
                 <div className="container4-box2">

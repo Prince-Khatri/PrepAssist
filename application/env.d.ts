@@ -2,4 +2,6 @@
 // by running `wrangler types --env-interface CloudflareEnv env.d.ts`
 
 interface CloudflareEnv {
+    AI: Ai
+    DB: D1Database
 }

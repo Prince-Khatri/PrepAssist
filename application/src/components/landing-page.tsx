@@ -1,5 +1,4 @@
 import Image from 'next/image';
-// import gif from '../images/prepAssist.gif';
 import Link from 'next/link';
 import "./components.css";
 
@@ -9,7 +8,7 @@ export function LandingPage(){
             <div id="container1">
                 <div className="container1-box1">
                     <section id="page1-s1" className="p p1">
-                        {/* <Image src={gif} alt='random'/> */}
+                        <Image src={"/prepAssist.gif"} alt="random"/>
                     </section>
                     
                     <section id="page1-s2" className="p p2">
@@ -22,13 +21,13 @@ export function LandingPage(){
                 </div>
 
                 <div className="container1-box2">
-                    <Link href='/login' style={{textDecoration:"none"}}>
+                    <Link href='/logIn' style={{textDecoration:"none"}}>
                     <section id="page1-s4" className="p p4 button-class">
                         Login/SignUp
                     </section>
                     </Link>
                     
-                    <Link href='/assistant' style={{textDecoration:"none"}}>
+                    <Link href='/dashboard' style={{textDecoration:"none"}}>
                     <section id="page1-s5" className="p p5 button-class">
                         Try demo for free
                     </section>

@@ -1,15 +1,16 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { FaCirclePlus } from "react-icons/fa6";
+import "./components.css"
 
-function P2(){
+function AssistantPage(){
     return(
         <>
             <div id="container2">
 
                 <nav className="navbar">
                     <div className="navbar-links">
-                        <Link to='/logIn'><a href="#login" className="logIn">Login</a></Link>
-                        <Link to='/signUp'><a href="#signup" className="signUp">SignUp</a></Link>
+                        <Link href='/login' className="logIn">Login</Link>
+                        <Link href='/register' className="signUp">SignUp</Link>
                     </div>
                 </nav>
 
@@ -35,7 +36,7 @@ function P2(){
 
                 
                 <section className="page2-s4 button-class">
-                    <Link to='/ansPage' style={{color:"#FFD56C", textDecoration:"none", width:"100%",height:"100%", display:"flex", alignItems:"center", justifyContent:"center"}}>Proceed</Link>
+                    <Link href='/ansPage' style={{color:"#FFD56C", textDecoration:"none", width:"100%",height:"100%", display:"flex", alignItems:"center", justifyContent:"center"}}>Proceed</Link>
                 </section>
                 
             </div>
@@ -43,4 +44,4 @@ function P2(){
     )
 }
 
-export default P2;
+export default AssistantPage;

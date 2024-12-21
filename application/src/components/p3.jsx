@@ -7,8 +7,8 @@ function P3(){
             <div id="container3">
                 <nav className="navbar">
                     <div className="navbar-links">
-                        <Link to='/logIn'><a href="#login" className="logIn">Login</a></Link>
-                        <Link to='/signUp'><a href="#signup" className="signUp">SignUp</a></Link>
+                        <Link to='/login'><a href="#login" className="logIn">Login</a></Link>
+                        <Link to='/register'><a href="#signup" className="signUp">SignUp</a></Link>
                     </div>
                 </nav>
             

@@ -1,13 +1,15 @@
-import gif from '../images/prepAssist.gif';
-import { Link } from 'react-router-dom';
+import Image from 'next/image';
+// import gif from '../images/prepAssist.gif';
+import Link from 'next/link';
+import "./components.css";
 
-function P1(){
+export function LandingPage(){
     return(
         <>
             <div id="container1">
                 <div className="container1-box1">
                     <section id="page1-s1" className="p p1">
-                        <img src={gif}/>
+                        {/* <Image src={gif} alt='random'/> */}
                     </section>
                     
                     <section id="page1-s2" className="p p2">
@@ -20,13 +22,13 @@ function P1(){
                 </div>
 
                 <div className="container1-box2">
-                    <Link to='/logIn' style={{textDecoration:"none"}}>
+                    <Link href='/login' style={{textDecoration:"none"}}>
                     <section id="page1-s4" className="p p4 button-class">
                         Login/SignUp
                     </section>
                     </Link>
                     
-                    <Link to='/uploadFile' style={{textDecoration:"none"}}>
+                    <Link href='/assistant' style={{textDecoration:"none"}}>
                     <section id="page1-s5" className="p p5 button-class">
                         Try demo for free
                     </section>
@@ -37,4 +39,4 @@ function P1(){
     )
 }
 
-export default P1;
+export default LandingPage;

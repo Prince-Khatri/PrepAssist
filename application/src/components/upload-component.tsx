@@ -11,9 +11,10 @@ export function UploadComponent({ type, setFileUrl }: Props) {
     if (type === "button") return (
         <UploadButton
             endpoint="pdfUploader"
-            onClientUploadComplete={async (res) => {
+            onClientUploadComplete={(res) => {
                 // Do something with the response
                 console.log("Files: ", res);
+                console.log(res[0].appUrl);
                 setFileUrl(res[0].appUrl);
                 alert("Upload Completed");
             }}

@@ -4,7 +4,12 @@ import "./components.css"
 import Link from "next/link";
 import { AiFillRightCircle } from "react-icons/ai";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FaAngleDoubleDown } from "react-icons/fa";
+import { generatePrompt } from "@/helpers/ai";
+import Header from "./header";
+import RenderMarkdown from "./render-markdown";
+import { mem0Client } from "@/mem0";
 
 type IMessage = { role: string; content: any; };
 
@@ -14,6 +19,20 @@ function AssistantPage() {
         { role: 'assistant', content: "How can I help you?" },
     ]);
     const [loading, setLoading] = useState(false);
+    const [one, setOne] = useState(false);
+    const [two, setTwo] = useState(true);
+
+    useEffect(() => {
+        mem0Client.getAll({ user_id: "fake-id" })
+            .then(memories => console.log(memories))
+            .catch((error) => console.log(error));
+    }, [])
+
+    useEffect(() => {
+        mem0Client.add(chat, { user_id: "fake-id" })
+            .then((response) => console.log(response))
+            .catch((error) => console.log(error));
+    }, [])
 
     const handleSubmit = async () => {
         if (!input.trim()) return;
@@ -25,7 +44,7 @@ function AssistantPage() {
 
         try {
             const response = await axios.post('/api/ai', {
-                prompt: input,
+                prompt: generatePrompt(input),
             });
 
             if (response.data?.response) {
@@ -56,16 +75,33 @@ function AssistantPage() {
     return (
         <>
             <div id="container3">
-                <nav className="navbar">
-                    <div className="navbar-links">
-                        <Link href='/login' className="logIn">Login</Link>
-                        <Link href='/register' className="signUp">SignUp</Link>
-                    </div>
-                </nav>
+                <Header />
 
                 <div id="page3-box">
-                    <section id="page3-s1">
+                    <section id="page3-s1" className="page2-box">
+                        <div style={{ fontWeight: "600", fontSize: "1.5rem" }}>Step 2:</div>
 
+                        <div style={{ margin: "25px 0 15px 0" }}>
+                            <button onClick={() => { setOne(true); setTwo(false); }}>
+                                <Link href="/dashboard">
+                                    Upload files<FaAngleDoubleDown style={{ alignSelf: "center", marginLeft: "5px" }} />
+                                </Link>
+                            </button>
+                            <div>
+                                <p style={{ fontSize: "0.8rem", marginTop: "5px", display: one ? 'block' : 'none' }}>Please upload all your notes and PDFs to this page, ensuring they are compressed to a minimal file size for efficiency</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button onClick={() => { setOne(false); setTwo(true); }}>
+                                <Link href="/assistant">
+                                    Search your query<FaAngleDoubleDown style={{ alignSelf: "center", marginLeft: "5px" }} />
+                                </Link>
+                            </button>
+                            <div>
+                                <p style={{ fontSize: "0.8rem", marginTop: "5px", display: two ? 'block' : 'none' }}>Quickly find important and summarized explanations from uploaded files</p>
+                            </div>
+                        </div>
                     </section>
                     <section id="page3-s2">
                         <div className="s2-box">
@@ -75,10 +111,10 @@ function AssistantPage() {
                                     className={`p-2 rounded-md ${message.role === 'user'
                                         ? 'bg-blue-100 text-blue-900 self-end ml-auto'
                                         : 'bg-green-100 text-green-900 self-start mr-auto'
-                                        } max-w-[80%]`}
+                                        } max-w-[80%] mt-2`}
                                 >
                                     <strong>{message.role === 'user' ? 'You: ' : 'Assistant: '}</strong>
-                                    {message.content}
+                                    <RenderMarkdown themeContent={message.content} />
                                 </div>
                             ))}
                             {loading && (

@@ -8,31 +8,55 @@ import { convertPdfToText } from "@/actions/convert-pdf-to-text";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { Files } from "./files";
+import { getAllFiles } from "@/actions/get-all-files"
+import { FaAngleDoubleDown } from "react-icons/fa";
+import Header from "./header";
 
-function DashboardPage() {
+async function DashboardPage() {
     const [fileUrl, setFileUrl] = useState("");
+    const [one, setOne] = useState(true);
+    const [two, setTwo] = useState(false);
     const router = useRouter();
 
+    const filesData = [
+        { id: 1, name: "Data Structures and Algo", key: "fasdfasdf" }
+    ];
+
     async function handleProceed() {
-        console.log(fileUrl)
-        // const pdf2txt = await axios.get("http://127.0.0.1:8000/api/extract-text", { params: { fileUrl } });
-        // console.log(pdf2txt.data);
-        // const res = await convertPdfToText(fileUrl);
-        // if (res?.success) router.push("/assistant");
+        console.log(fileUrl);
+        router.push("/assistant");
     }
 
     return (
         <>
-            <nav className="navbar">
-                <div className="navbar-links">
-                    <Link href='/login'>Login</Link>
-                    <Link href='/register'>SignUp</Link>
-                </div>
-            </nav>
+            <Header />
 
             <div id="container2">
                 <div className="page2-box">
+                    <div style={{ fontWeight: "600", fontSize: "1.5rem" }}>Step 1:</div>
 
+                    <div style={{ margin: "25px 0 15px 0" }}>
+                        <button onClick={() => { setOne(true); setTwo(false); }}>
+                            <Link href="/dashboard">
+                                Upload files<FaAngleDoubleDown style={{ alignSelf: "center", marginLeft: "5px" }} />
+                            </Link>
+                        </button>
+                        <div>
+                            <p style={{ fontSize: "0.8rem", marginTop: "5px", display: one ? 'block' : 'none' }}>Please upload all your notes and PDFs to this page, ensuring they are compressed to a minimal file size for efficiency</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button onClick={() => { setOne(false); setTwo(true); }}>
+                            <Link href="/assistant">
+                                Search your query<FaAngleDoubleDown style={{ alignSelf: "center", marginLeft: "5px" }} />
+                            </Link>
+                        </button>
+                        <div>
+                            <p style={{ fontSize: "0.8rem", marginTop: "5px", display: two ? 'block' : 'none' }}>Quickly find important and summarized explanations from uploaded files</p>
+                        </div>
+                    </div>
                 </div>
 
                 {/* <section className="page2-s1">
@@ -49,12 +73,7 @@ function DashboardPage() {
 
 
                 <section className="page2-s3">
-                    <div>Box 1</div>
-                    <div>Box 2</div>
-                    <div>Box 3</div>
-                    <div>Box 4</div>
-                    <div>Box 5</div>
-                    <div>Box 6</div>
+                    <Files data={filesData} />
                 </section>
 
 

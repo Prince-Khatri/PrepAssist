@@ -21,7 +21,7 @@ export function LandingPage(){
                 </div>
 
                 <div className="container1-box2">
-                    <Link href='/logIn' style={{textDecoration:"none"}}>
+                    <Link href='/login' style={{textDecoration:"none"}}>
                     <section id="page1-s4" className="p p4 button-class">
                         Login/SignUp
                     </section>
